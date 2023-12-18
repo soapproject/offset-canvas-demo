@@ -6,3 +6,9 @@ html,
 body {
   height: 100%;
 }
+
+@font-face {
+  font-family: 'Cubic11';
+  src: url('/fonts/Cubic_11.ttf') format('truetype');
+  font-display: swap;
+}

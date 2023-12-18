@@ -22,10 +22,12 @@ export default function Canvas({ className, children }: Props) {
 
   /**畫出前端的canvas, 然後把圖片dataURL跟A的頂點存到state */
   useEffect(() => {
-    const container = containerRef.current;
-    const { stage, imageData } = initStage(container);
-    const top = findTop(imageData);
-    setCanvasMeta({ top, dataURL: stage.toDataURL() });
+    (async () => {
+      const container = containerRef.current;
+      const { stage, imageData } = await initStage(container);
+      const top = findTop(imageData);
+      setCanvasMeta({ top, dataURL: stage.toDataURL() });
+    })();
   }, []);
 
   /**呼叫server action畫出後端canvase跟輸出圖片 */

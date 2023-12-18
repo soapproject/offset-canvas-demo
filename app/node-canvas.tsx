@@ -25,7 +25,7 @@ export async function drawNodeCanvas({
   dataURL: frontendDataURL,
 }: CanvasMeta) {
   // 畫後端canvas
-  const { stage, textNode, imageData } = initStage();
+  const { stage, textNode, imageData } = await initStage();
 
   // 把初始的前端跟後端canvas圖片存到專案的out資料夾
   await saveImage(frontendDataURL, 'frontend.png');
