@@ -20,12 +20,12 @@ export interface CanvasMeta {
   } | null;
   dataURL: string;
 }
-export async function drawNodeCanvas({
-  top: frontendTop,
-  dataURL: frontendDataURL,
-}: CanvasMeta) {
+export async function drawNodeCanvas(
+  { top: frontendTop, dataURL: frontendDataURL }: CanvasMeta,
+  text: string
+) {
   // 畫後端canvas
-  const { stage, textNode, imageData } = await initStage();
+  const { stage, textNode, imageData } = await initStage(undefined, text);
 
   // 把初始的前端跟後端canvas圖片存到專案的out資料夾
   await saveImage(frontendDataURL, 'frontend.png');
@@ -38,7 +38,7 @@ export async function drawNodeCanvas({
   if (frontendTop && backendTop) {
     const offsetX = backendTop.x - frontendTop.x;
     const offsetY = backendTop.y - frontendTop.y;
-    textNode.x(textNode.x() - offsetX);
+    textNode.x(textNode.x() + offsetX);
     textNode.y(textNode.y() - offsetY);
     stage.batchDraw();
   }
