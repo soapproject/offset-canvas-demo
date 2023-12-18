@@ -8,6 +8,8 @@ This project demonstrates how to resolve text rendering differences between serv
 本專案的核心思路是在客戶端和伺服器端都渲染一個英文字母 “A”，然後比較這個 “A” 的最高點來找出偏移量。
 The basic idea of this project is to render the English letter "A" on both the client and server side, and then compare the top point of the "A" to find the offset.
 
+![image](https://github.com/soapproject/offset-canvas-demo/assets/16914631/403c3323-71ad-43d0-9d1b-fb19520e4b23)
+
 ## 專案結構 / Project Structure
 - `app/canvas.tsx`：前端的 Canvas 實作。/ Front-end Canvas implementation.
 - `app/node-canvas.tsx`：後端的 Canvas 實作。/ Back-end Canvas implementation.
