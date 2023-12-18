@@ -4,9 +4,10 @@ import fs from 'fs-extra';
 import path from 'path';
 import { findTop, initStage } from './canvas-util';
 
+const SAVE_PATH = path.join(process.cwd(), 'out');
+
 async function saveImage(dataURL: string, name: string) {
-  const saveFolder = path.join(process.cwd(), 'out');
-  const imagePath = path.join(saveFolder, name);
+  const imagePath = path.join(SAVE_PATH, name);
   const imageBuffer = Buffer.from(dataURL.split(',')[1], 'base64');
   await fs.outputFile(imagePath, imageBuffer);
 }
@@ -45,4 +46,20 @@ export async function drawNodeCanvas({
   // 把更改過的後端canvas圖片存到out
   const adjustedBackendDataURL = stage.toDataURL();
   await saveImage(adjustedBackendDataURL, 'backend-adjusted.png');
+}
+
+export async function getOutputImages() {
+  const files = await fs.readdir(SAVE_PATH);
+  const pngFiles = files.filter(file => file.endsWith('.png'));
+  const base64Images = await Promise.all(
+    pngFiles.map(async file => {
+      const filePath = path.join(SAVE_PATH, file);
+      const fileBuffer = await fs.readFile(filePath);
+      return {
+        src: `data:image/png;base64,${fileBuffer.toString('base64')}`,
+        fileName: file,
+      };
+    })
+  );
+  return base64Images;
 }

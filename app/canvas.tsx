@@ -8,7 +8,7 @@ import {
   useTransition,
 } from 'react';
 import { findTop, initStage } from './canvas-util';
-import { CanvasMeta, drawNodeCanvas } from './node-canvas';
+import { CanvasMeta, drawNodeCanvas, getOutputImages } from './node-canvas';
 
 interface Props extends HTMLAttributes<HTMLElement> {}
 export default function Canvas({ className, children }: Props) {
@@ -18,6 +18,7 @@ export default function Canvas({ className, children }: Props) {
     top: null,
     dataURL: '',
   });
+  const [images, setImages] = useState<{ src: string; fileName: string }[]>([]);
 
   /**畫出前端的canvas, 然後把圖片dataURL跟A的頂點存到state */
   useEffect(() => {
@@ -31,6 +32,8 @@ export default function Canvas({ className, children }: Props) {
   const generateImage = () => {
     startServerAction(async () => {
       await drawNodeCanvas(cavnasMeta);
+      const images = await getOutputImages();
+      setImages(images);
     });
   };
 
@@ -38,6 +41,18 @@ export default function Canvas({ className, children }: Props) {
     <div>
       <div id='canvas-container' className={className} ref={containerRef}></div>
       <button onClick={generateImage}>Draw</button>
+      <div className=' flex gap-4'>
+        {images.map((image, index) => (
+          <div key={index}>
+            <p>{image.fileName}</p>
+            <img
+              className='border bg-slate-500'
+              src={image.src}
+              alt={`Image ${index}`}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

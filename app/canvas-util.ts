@@ -1,8 +1,8 @@
 import Konva from 'konva';
 
 export const RED_THRESHOLD = 250;
-export const CANVAS_SIZE = 25;
-export const FONT_SIZE = 16;
+export const CANVAS_SIZE = 250;
+export const FONT_SIZE = 160;
 
 /**從圖片左上角開始掃描 找到第一個大於RED_THRESHOLD就是A的頂點 */
 export function findTop(imageData: ImageData) {
